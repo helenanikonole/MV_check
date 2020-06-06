@@ -1,5 +1,8 @@
 export default {
   mode: 'spa',
+  router: {
+    base: '/MV_check/'
+  },
   head: {
     title: 'DEFAULT TITLE',
     meta: [
