@@ -1,9 +1,12 @@
 <template>
-<div>
-Главная страница
-<video class="webcam__video" @loadedmetadata="onPlay()" ref="video" id="inputVideo" width="720" height="560" autoplay/>
+<div class="webcam__container">
+<video class="webcam__video" @loadedmetadata="onPlay()" ref="video" id="inputVideo" width="500px" height="500px" autoplay/>
+<canvas ref="overlay" class="webcam__canvas"/>
 </div>
 </template>
+<style lang='scss'>
+@import '@/assets/scss/components/index.scss';
+</style>
 <script>
 import * as faceapi from 'face-api.js'
 export default {
@@ -37,16 +40,10 @@ export default {
         const options = new faceapi.TinyFaceDetectorOptions({ inputSize, scoreThreshold })
 
         faceapi.detectSingleFace(videoEl, options).then(res => {
-            console.log(res);
             setTimeout(() => { this.onPlay() })
-        })
 
-        /*
-        if (result) {
-            const canvas = $('#overlay').get(0)
-            const dims = faceapi.matchDimensions(canvas, videoEl, true)
-            faceapi.draw.drawDetections(canvas, faceapi.resizeResults(result, dims))
-        }*/
+            this.$overlay
+        })
     },
     startVideo(video, openModal) {
         return new Promise ((resolve, reject) => {
