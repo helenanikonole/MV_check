@@ -43,15 +43,13 @@ export default {
             console.log(result);
 
             if (result) {
-                //const canvas = $('#overlay').get(0)
-                //const dims = faceapi.matchDimensions(canvas, videoEl, true)
-                //faceapi.draw.drawDetections(canvas, faceapi.resizeResults(result, dims))
+                const canvas = this.$refs.overlay;
+                const dims = faceapi.matchDimensions(canvas, videoEl, true)
+                faceapi.draw.drawDetections(canvas, faceapi.resizeResults(result, dims))
             }
 
             setTimeout(() => { this.onPlay() })
-
-        /*
-        */
+        });
     },
     startVideo(video, openModal) {
         return new Promise ((resolve, reject) => {
