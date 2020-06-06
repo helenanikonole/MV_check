@@ -1,0 +1,89 @@
+.main{
+    &__container{
+        padding:30px;
+        display: flex;
+        justify-content: space-around;
+    }
+}
+.webcam{
+    &__container{
+        position: relative;
+        width: 400px;
+        height: 400px;
+        &:hover{
+            
+            background: #fafafa;
+            .text-in-corner{
+                color: #ffffff;
+            }
+        }
+    }
+    &__video{
+        display: block;
+        margin:0;
+        padding:0;
+        outline: none;
+        width:398px;
+        height: 398px;
+        border: 1px dashed green;
+        
+        object-fit: contain;
+    }
+    &__canvas{
+        width: 400px;
+        height: 400px;
+        position: absolute;
+        top:0;
+        left:0;
+    }
+}
+
+.image-preview{
+    &__dropzone{
+        width: 300px;
+        height: 200px;
+        position: relative;
+        background: transparent;
+        cursor: pointer;
+        border: 1px dashed green;
+        transition: all 150ms ease-in-out;
+        &:hover{
+            
+            background: #fafafa;
+            .text-in-corner{
+                color: #ffffff;
+            }
+        }
+    }
+    &__image{
+        
+        border: 1px dashed green;
+        transition: all 150ms ease-in-out;
+        &:hover{
+            
+            background: #fafafa;
+            .text-in-corner{
+                color: #ffffff;
+            }
+        }
+        width: 300px;
+        height: 200px;
+        img{
+            background: #121212;
+            display: block;
+            object-fit: contain;
+            width: 300px;
+            height: 200px;
+        }
+    }
+}
+.text-in-corner{
+    cursor: pointer;
+    transition: all 150ms ease-in-out;
+    position: absolute;
+    top:0;
+    left:0;
+    background: #121212;
+    color: green;
+    padding: 3px 10px;
+}
