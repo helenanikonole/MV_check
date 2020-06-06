@@ -1,9 +1,12 @@
 <template>
-<div>
-Главная страница
-<video class="webcam__video" @loadedmetadata="onPlay()" ref="video" id="inputVideo" width="720" height="560" autoplay/>
+<div class="webcam__container">
+<video class="webcam__video" @loadedmetadata="onPlay()" ref="video" id="inputVideo" width="500px" height="500px" autoplay/>
+<canvas ref="overlay" class="webcam__canvas"/>
 </div>
 </template>
+<style lang='scss'>
+@import '@/assets/scss/components/index.scss';
+</style>
 <script>
 import * as faceapi from 'face-api.js'
 export default {
@@ -21,12 +24,12 @@ export default {
             console.log(`Error: ${err}`)
         })
     .catch(err => {
-       
+
     })
   },
-  methods: { 
+  methods: {
     openModal(id, text) {
-        console.log(`Open modal with id:${id}`)  
+        console.log(`Open modal with id:${id}`)
     },
     onPlay() {
         const videoEl = this.$refs.video;
@@ -46,7 +49,6 @@ export default {
             }
 
             setTimeout(() => { this.onPlay() })
-        })
 
         /*
         */
@@ -54,9 +56,9 @@ export default {
     startVideo(video, openModal) {
         return new Promise ((resolve, reject) => {
             navigator.getUserMedia = navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia || navigator.msGetUserMedia || navigator.oGetUserMedia
-        
+
             if (navigator.getUserMedia) {
-                navigator.getUserMedia({ video: {} }, 
+                navigator.getUserMedia({ video: {} },
                 (stream) => {
                     video.srcObject = stream
                     resolve(stream)
