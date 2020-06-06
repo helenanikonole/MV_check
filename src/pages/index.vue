@@ -39,10 +39,20 @@ export default {
 
         const options = new faceapi.TinyFaceDetectorOptions({ inputSize, scoreThreshold })
 
-        faceapi.detectSingleFace(videoEl, options).then(result => {
+        faceapi
+        .detectSingleFace(videoEl, options)
+        .withFaceLandmarks()
+        .withFaceDescriptor()
+        .then(result => {
             console.log(result);
 
             if (result) {
+                const faceMatcher = new faceapi.FaceMatcher(result)
+
+                const bestMatch = faceMatcher.findBestMatch(result.descriptor)
+                
+                console.log(bestMatch.toString())
+
                 const canvas = this.$refs.overlay;
                 const dims = faceapi.matchDimensions(canvas, videoEl, true)
                 faceapi.draw.drawDetections(canvas, faceapi.resizeResults(result, dims))
