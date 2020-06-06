@@ -39,6 +39,9 @@ export default {
   transition: {
     mode: 'out-in'
   },
+  styleResources: {
+    scss: ['assets/scss/base/main.scss']
+  },
   build: {
     extend(config, ctx) {}
   },
@@ -48,7 +51,7 @@ export default {
   },
   srcDir: 'src',
   buildDir: 'build',
-  styleResources: {
-    scss: ['assets/scss/base/main.scss']
-  },
+  generate: {
+    dir: 'docs'
+  }
 }
