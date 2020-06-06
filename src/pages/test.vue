@@ -84,10 +84,6 @@ export default {
             .then(result => {
 
                 if(result) {
-                    const canvas = this.$refs.overlay;
-                    const dims = faceapi.matchDimensions(canvas, videoEl, true)
-                    faceapi.draw.drawDetections(canvas, faceapi.resizeResults(result, dims))
-
                     if(context.image.activeURL) {
                         const referenceImage = context.$refs.referenceImage;
 
@@ -99,7 +95,13 @@ export default {
                                     const faceMatcher = new faceapi.FaceMatcher(result)
                                     const bestMatch = faceMatcher.findBestMatch(refResult.descriptor)
                                     
-                                    console.log(bestMatch.toString())
+                                    if(bestMatch._label != 'unknown') {
+                                        const canvas = this.$refs.overlay;
+                                        const dims = faceapi.matchDimensions(canvas, videoEl, true)
+                                        faceapi.draw.drawDetections(canvas, faceapi.resizeResults(result, dims))
+
+                                        console.log(bestMatch)
+                                    }
                                 }
                             })
                     }
