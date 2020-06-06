@@ -28,26 +28,25 @@ export default {
     openModal(id, text) {
         console.log(`Open modal with id:${id}`)  
     },
-    onPlay: async() => {
+    onPlay() {
         const videoEl = document.getElementById('inputVideo')
-        //const videoEl = this.$refs.video
 
         let inputSize = 512
         let scoreThreshold = 0.5
 
         const options = new faceapi.TinyFaceDetectorOptions({ inputSize, scoreThreshold })
 
-        const result = await faceapi.detectSingleFace(videoEl, options)
-        console.log(result);
-        
+        faceapi.detectSingleFace(videoEl, options).then(res => {
+            console.log(res);
+            setTimeout(() => { this.onPlay() })
+        })
+
         /*
         if (result) {
             const canvas = $('#overlay').get(0)
             const dims = faceapi.matchDimensions(canvas, videoEl, true)
             faceapi.draw.drawDetections(canvas, faceapi.resizeResults(result, dims))
         }*/
-
-        setTimeout(() => onPlay())
     },
     startVideo(video, openModal) {
         return new Promise ((resolve, reject) => {
