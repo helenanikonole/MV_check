@@ -1,7 +1,7 @@
 <template>
 <div>
 Главная страница
-<video class="webcam__video" ref="video"  width="720" height="560" autoplay/>
+<video class="webcam__video" ref="video" id="inputVideo" width="720" height="560" autoplay/>
 </div>
 </template>
 <script>
@@ -14,6 +14,7 @@ export default {
             faceapi.nets.faceRecognitionNet.loadFromUri('./models'),
             faceapi.nets.faceExpressionNet.loadFromUri('./models')
         ]).then(() => {
+            this.$refs.video.addEventListener('loadedmetadata', this.onPlay)
             this.startVideo(this.$refs.video, this.openModal).then(stream => {
                 console.log(stream)
             })
@@ -27,7 +28,25 @@ export default {
   methods: { 
     openModal(id, text) {
         console.log(`Open modal with id:${id}`)  
-    },   
+    },
+    onPlay(e) {
+        //const videoEl = $('#inputVideo').get(0)
+        const videoEl = this.$refs.video
+
+        let inputSize = 512
+        let scoreThreshold = 0.5
+
+        const options = new faceapi.TinyFaceDetectorOptions({ inputSize, scoreThreshold })
+
+        const result = faceapi.detectSingleFace(videoEl, options)
+
+        /*
+        if (result) {
+            const canvas = $('#overlay').get(0)
+            const dims = faceapi.matchDimensions(canvas, videoEl, true)
+            faceapi.draw.drawDetections(canvas, faceapi.resizeResults(result, dims))
+        }*/
+    },
     startVideo(video, openModal) {
         return new Promise ((resolve, reject) => {
             navigator.getUserMedia = navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia || navigator.msGetUserMedia || navigator.oGetUserMedia
