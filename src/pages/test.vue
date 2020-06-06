@@ -3,7 +3,7 @@
 <div class="image-preview__wrapper">
     <div v-if="image.activeURL" class="image-preview__image">
         <div class="text-in-corner" @click="removeImage">Select new image</div>
-        <img :src="image.activeURL">
+        <img :src="image.activeURL" ref="referenceImage">
     </div>
     <div v-show="!image.activeURL" :class="[error?'error':'', 'image-preview__dropzone']" 
         ref="dropzone"
@@ -71,6 +71,8 @@ export default {
         },
         onPlay() {
             const videoEl = this.$refs.video;
+            const context = this;
+
             let inputSize = 512
             let scoreThreshold = 0.5
             const options = new faceapi.TinyFaceDetectorOptions({ inputSize, scoreThreshold })
@@ -80,15 +82,28 @@ export default {
             .withFaceLandmarks()
             .withFaceDescriptor()
             .then(result => {
-                console.log(result);
-                if (result) {
-                    const faceMatcher = new faceapi.FaceMatcher(result)
-                    const bestMatch = faceMatcher.findBestMatch(result.descriptor)
-                    
-                    console.log(bestMatch.toString())
+
+                if(result) {
                     const canvas = this.$refs.overlay;
                     const dims = faceapi.matchDimensions(canvas, videoEl, true)
                     faceapi.draw.drawDetections(canvas, faceapi.resizeResults(result, dims))
+
+                    if(context.image.activeURL) {
+                        const referenceImage = context.$refs.referenceImage;
+
+                        faceapi.detectSingleFace(referenceImage, options)
+                            .withFaceLandmarks()
+                            .withFaceDescriptor()
+                            .then(refResult => {
+                                if (refResult) {
+                                    const faceMatcher = new faceapi.FaceMatcher(result)
+                                    const bestMatch = faceMatcher.findBestMatch(refResult.descriptor)
+                                    
+                                    console.log(bestMatch.toString())
+                                }
+                            })
+                    }
+
                 }
                 setTimeout(() => { this.onPlay() })
             })
