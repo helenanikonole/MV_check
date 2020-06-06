@@ -1,0 +1,94 @@
+@mixin font-light {
+  font-family: Roboto;
+  font-weight: 300;
+  font-style: normal;
+  letter-spacing: 0.02em;
+}
+@mixin font-regular {
+  font-family: Roboto;
+  font-weight: normal;
+  font-style: normal;
+  letter-spacing: 0.02em;
+}
+@mixin font-medium {
+  font-family: Roboto;
+  font-weight: 500;
+  font-style: normal;
+  letter-spacing: 0.02em;
+}
+@mixin font-bold {
+  font-family: Roboto;
+  font-weight: bold;
+  font-style: normal;
+  letter-spacing: 0.02em;
+}
+
+@mixin custom-scroll-bar{
+  &::-webkit-scrollbar {
+    width: 3px;
+    height: 3px;
+    background: #191919;
+  }
+
+  &::-webkit-scrollbar-track {
+    background: transparent;
+    border-radius: 10px;
+  }
+  
+  &::-webkit-scrollbar-thumb {
+    background: #FCDD4B;
+    border:0.1px solid #EACC3F; 
+    border-radius: 10px;
+  }
+
+  &::-webkit-scrollbar-thumb:hover {
+    background: #ffdc48; 
+  }
+
+}
+@mixin custom-scroll-grey-bar-transparent-bg{
+  &::-webkit-scrollbar {
+    width: 3px;
+    height: 3px;
+    background: transparent !important;
+  }
+
+  &::-webkit-scrollbar-track {
+    background: transparent;
+    border-radius: 10px;
+  }
+  
+  &::-webkit-scrollbar-thumb {
+    background: rgba(#ffffff, 0.6);
+    transition: all 150ms ease-in; 
+    border-radius: 10px;
+  }
+
+  &::-webkit-scrollbar-thumb:hover {
+    background: #75746d; 
+  }
+}
+
+@mixin custom-scroll-bar-grey-bg{
+  &::-webkit-scrollbar {
+    width: 3px;
+    height: 3px;
+    background: #F6F6F6 !important;
+  }
+
+  &::-webkit-scrollbar-track {
+    background: transparent;
+    border-radius: 10px;
+  }
+  
+  &::-webkit-scrollbar-thumb {
+    background: #FCDD4B;
+    border:0.5px solid #EACC3F !important; 
+    border-radius: 10px;
+  }
+
+  &::-webkit-scrollbar-thumb:hover {
+    background: #ffdc48; 
+  }
+
+}
