@@ -65,25 +65,25 @@ export default {
                     id: 0,
                     template: '- Webcam (recognized by _count_/_models_ models)',
                     count: 0,
-                    models: 2,
+                    models: 1,
                     disabled: false, 
                 },
                 {
                     id: 1,
                     template: '- Street CCTV (_count_/_models_ models)',
                     count: 0,
-                    models: 4,
+                    models: 0,
                     disabled: true,
                 },
                 {
-                    id: 1,
+                    id: 2,
                     template: '- Public transport CCTV (_count_/_models_ models)',
                     count: 0,
                     models: 0,
                     disabled: true,
                 },
                 {
-                    id: 1,
+                    id: 3,
                     template: '- Security CCTV (_count_/_models_ models)',
                     count: 0,
                     models: 0,
@@ -142,11 +142,14 @@ export default {
             }) 
         },
         addCount(id) {
+            // do nothing
+        },
+        setCounter(id, value) {
             const context = this
             
             context.logs.find((log, index) => {
                 if(log.id == id) {
-                    context.logs[index].count++
+                    context.logs[index].count = value
                 }
             }) 
         },
@@ -185,7 +188,7 @@ export default {
                                         const dims = faceapi.matchDimensions(canvas, videoEl, true)
                                         faceapi.draw.drawDetections(canvas, faceapi.resizeResults(result, dims))
 
-                                        console.log(bestMatch)
+                                        this.setCounter(0, 1);
                                     }
                                 }
                             })
