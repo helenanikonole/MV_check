@@ -40,7 +40,7 @@
                     <div class="webcam__recongnized">
                         <h2>You have been recongnized</h2>
                         <div>
-                            <button class="webcam__try-again">Try again</button>
+                            <button class="webcam__try-again" @click="tryAgain">Try again</button>
                         </div>
                     </div>
                 </div>
@@ -51,7 +51,7 @@
     </div>
 
     <div class="system-logs__wrapper">
-        <div class="text-in-corner" @click="addCount(0)">System logs</div>
+        <div class="text-in-corner">System logs</div>
         <div class="system-logs__list">
             <div v-for="log of preparedLogs">
                 <span :class="[log.disabled ? 'system-logs__log_disabled':'', 'system-logs__log']">{{log.text}}</span>
@@ -148,7 +148,6 @@ export default {
     },
     mounted() {
         const context = this
-        //Показать дисклеймер
         
         Promise.all([
             context.init(),
@@ -167,13 +166,12 @@ export default {
         }),
         init() {
             const context = this
-            //Показать дисклеймер
+
             context.showDisclaimer()
             
             return new Promise ((resovle, reject) => {
-                //Если 
                 context.startVideo().then(() => {
-                    setTimeout(context.hideDisclaimer, 5000)
+                    context.hideDisclaimer()
                 }).catch(() => {
                     setTimeout( function () {
                         context.openModal('Error', 'Enable camera to continue.')
@@ -190,10 +188,13 @@ export default {
             this.isDisclaimer = false
         },
         tryAgain() {
-            //Действия необходимые при запуске сервиса снова
+            
             for(let index in this.logs) {
+                console.log(this.logs[index])
                 this.logs[index].count = 0
             }
+
+            this.isRecognized = false
         },
         resetCounter(id) {
             const context = this
@@ -202,10 +203,9 @@ export default {
                 if(log.id == id) {
                     context.logs[index].count = 0
                 }
-            }) 
-        },
-        addCount(id) {
-            // do nothing
+            })
+
+             
         },
         setCounter(id, value) {
             const context = this
