@@ -67,7 +67,7 @@
 Facial Recognition algorithms uses AI to determine your identity through pictures or videos of your face. To date they are used massively, violating all privacy standards, not only online but also offline - through the ubiquitous surveillance cameras. Artists and activists have developed many projects of special makeup, hairstyles and jewelry to make a face unrecognizable for Facial Recognition algorithms, but we can never be sure if any particular solution works. Facial Recognition Test solves this problem.
 <br/>
 <br/>
-Facial Recognition Test was developed in a frame of Hacathon on Internet Freedom on 6-7 June 2020 by Nikita Morozov, Nikita Prudnikov, Corwin … and Helena Nikonole.
+Facial Recognition Test was developed in a frame of Hacathon on Internet Freedom on 6-7 June 2020 by Corwin, Nikita Morozov, Nikita Prudnikov and Helena Nikonole.
 Corporations and authorities invest a lot in developing Facial Recognition algorithms. Social projects like Facial Recognition Test can not succeed without support of community. You can contribute to the project on github
         </p>
         <div class="manifest__github"> 
