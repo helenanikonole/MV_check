@@ -1,0 +1,29 @@
+.modal-enter {
+    opacity: 0;
+  }
+  
+  .modal-leave-active {
+    opacity: 0;
+  }
+  
+  .modal-enter .modal-container,
+  .modal-leave-active .modal-container {
+    -webkit-transform: scale(1.1);
+    transform: scale(1.1);
+  }
+  
+
+  .disclaimer-enter-active, .disclaimer-leave-active {
+    transition: opacity .5s;
+  }
+  .disclaimer-enter, .disclaimer-leave-to /* .fade-leave-active до версии 2.1.8 */ {
+    opacity: 0;
+  }
+
+  .recongnized-enter-active, .recongnized-leave-active {
+    transition: opacity .5s;
+  }
+  .recongnized-enter, .recongnized-leave-to /* .fade-leave-active до версии 2.1.8 */ {
+    opacity: 0;
+  }
+  

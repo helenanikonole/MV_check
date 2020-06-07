@@ -7,12 +7,14 @@
   "scripts": {
     "start": "nuxt build && nuxt start",
     "generate": "nuxt generate",
+    "stop": "pkill --signal SIGINT myApp",
     "dev": "nuxt"
   },
   "dependencies": {
     "@nuxtjs/axios": "^5.3.6",
     "@nuxtjs/pwa": "^3.0.0-0",
     "@nuxtjs/style-resources": "^1.0.0",
+    "base64-blob": "^1.4.1",
     "face-api.js": "^0.22.2",
     "nuxt": "^2.0.0"
   },
