@@ -35,6 +35,16 @@
                     </div>
                 </div>
             </transition>
+            <transition name="recongnized">
+                <div class="webcam__recongnized-wrapper" v-if="isRecognized">
+                    <div class="webcam__recongnized">
+                        <h2>You have been recongnized</h2>
+                        <div>
+                            <button class="webcam__try-again">Try again</button>
+                        </div>
+                    </div>
+                </div>
+            </transition>
             <video v-show="!isDisclaimer" class="webcam__video" @loadedmetadata="onPlay()" ref="video" id="inputVideo" autoplay/>
             <canvas v-show="!isDisclaimer" ref="overlay" class="webcam__canvas"/>
         </div>
@@ -71,6 +81,7 @@ export default {
                 activeURL: null,
             },
             isDisclaimer: true,
+            isRecognized: false,
             modal: {
                 show: false,
                 header: 'Default header',
@@ -80,7 +91,7 @@ export default {
                 {
                     id: 0,
                     template: '- Webcam (recognized by _count_/_models_ models)',
-                    count: -1,
+                    count: 0,
                     models: 2,
                     disabled: false, 
                 },
@@ -115,7 +126,7 @@ export default {
                 let res = newValue.find(el => el.count > 0)
                 
                 if(res) {
-                    //Действие про распознование
+                    this.isRecognized = true
                 }
             }
             
