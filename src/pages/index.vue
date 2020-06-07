@@ -198,9 +198,7 @@ export default {
             this.isDisclaimer = false
         },
         tryAgain() {
-            
             for(let index in this.logs) {
-                console.log(this.logs[index])
                 this.logs[index].count = 0
             }
 
