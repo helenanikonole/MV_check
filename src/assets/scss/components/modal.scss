@@ -17,7 +17,7 @@
   }
   
   .modal-container {
-    border:1px dashed green;
+    border:1px dashed #66ff00;
     width: 300px;
     margin: 0px auto;
     padding: 20px 30px;
@@ -44,7 +44,7 @@
           cursor: pointer;
           background: transparent;
           outline: none;
-          border:1px dashed green;
+          border:1px dashed #66ff00;
           height: 30px;
           
       }
@@ -72,3 +72,10 @@
     transform: scale(1.1);
   }
   
+
+  .disclaimer-enter-active, .disclaimer-leave-active {
+    transition: opacity .5s;
+  }
+  .disclaimer-enter, .disclaimer-leave-to /* .fade-leave-active до версии 2.1.8 */ {
+    opacity: 0;
+  }

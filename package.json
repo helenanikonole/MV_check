@@ -7,6 +7,7 @@
   "scripts": {
     "start": "nuxt build && nuxt start",
     "generate": "nuxt generate",
+    "stop": "pkill --signal SIGINT myApp",
     "dev": "nuxt"
   },
   "dependencies": {

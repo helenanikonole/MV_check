@@ -27,20 +27,35 @@
     <div class="webcam__wrapper">
     <div class="text-in-corner z-index-10" >Your webcam</div>
         <div class="webcam__video-wrapper">
-            <video class="webcam__video" @loadedmetadata="onPlay()" ref="video" id="inputVideo" autoplay/>
-            <canvas ref="overlay" class="webcam__canvas"/>
+            <transition name="disclaimer">
+                <div class="webcam__disclaimer-wrapper" v-if="isDisclaimer">
+                    <div class="webcam__disclaimer">
+                        <h2>Disclaimer</h2>
+                        <h3>VerifyAI accesses your device camera and uses AI algorithms to analyse your video stream. VerifyAI DO NOT transmit, store or share your data as all AI computations are carried out on your local machine ONLY. We respect your privacy.</h3>
+                    </div>
+                </div>
+            </transition>
+            <video v-show="!isDisclaimer" class="webcam__video" @loadedmetadata="onPlay()" ref="video" id="inputVideo" autoplay/>
+            <canvas v-show="!isDisclaimer" ref="overlay" class="webcam__canvas"/>
         </div>
     </div>
 
     <div class="system-logs__wrapper">
-        <div class="text-in-corner" @click="addCount(1)">System logs</div>
+        <div class="text-in-corner" @click="addCount(0)">System logs</div>
         <div class="system-logs__list">
             <div v-for="log of preparedLogs">
                 <span :class="[log.disabled ? 'system-logs__log_disabled':'', 'system-logs__log']">{{log.text}}</span>
             </div>
         </div>
     </div>
-    <div class="div4">Блок информации о проекте </div>
+    <div class="manifest__wrapper">
+        <div class="text-in-corner">About</div>
+        <div class="manifest__github"> 
+        <a  href="https://github.com/helenanikonole/MV_check" target="_blank">
+            <img title="Github repository" src="~/assets/images/logo.png"/>
+        </a>
+        </div>
+    </div>
 </div>
 </template>
 <script>
@@ -55,6 +70,7 @@ export default {
                 base64: null,
                 activeURL: null,
             },
+            isDisclaimer: true,
             modal: {
                 show: false,
                 header: 'Default header',
@@ -64,7 +80,7 @@ export default {
                 {
                     id: 0,
                     template: '- Webcam (recognized by _count_/_models_ models)',
-                    count: 0,
+                    count: -1,
                     models: 2,
                     disabled: false, 
                 },
@@ -72,24 +88,37 @@ export default {
                     id: 1,
                     template: '- Street CCTV (_count_/_models_ models)',
                     count: 0,
-                    models: 4,
+                    models: 0,
                     disabled: true,
                 },
                 {
-                    id: 1,
+                    id: 2,
                     template: '- Public transport CCTV (_count_/_models_ models)',
                     count: 0,
                     models: 0,
                     disabled: true,
                 },
                 {
-                    id: 1,
+                    id: 3,
                     template: '- Security CCTV (_count_/_models_ models)',
                     count: 0,
                     models: 0,
                     disabled: true,
                 }
             ]
+        }
+    },
+    watch: {
+        logs: {
+            deep: true,
+            handler(newValue){
+                let res = newValue.find(el => el.count > 0)
+                
+                if(res) {
+                    //Действие про распознование
+                }
+            }
+            
         }
     },
     computed: {
@@ -109,23 +138,46 @@ export default {
     mounted() {
         const context = this
         //Показать дисклеймер
+        
         Promise.all([
-                faceapi.nets.tinyFaceDetector.loadFromUri('./models'),
-                faceapi.nets.faceLandmark68Net.loadFromUri('./models'),
-                faceapi.nets.faceRecognitionNet.loadFromUri('./models'),
-                faceapi.nets.faceExpressionNet.loadFromUri('./models')
-            ]).then(() => {
-                context.startVideo(this.$refs.video).catch(() => {
-                    context.openModal('Error', 'Enable camera to continue')
-                })
-            }).catch(err => {
-                context.openModal('Error', 'Something went wrong, check console for more information')
-            })
+            context.init(),
+            faceapi.nets.tinyFaceDetector.loadFromUri('./models'),
+            faceapi.nets.faceLandmark68Net.loadFromUri('./models'),
+            faceapi.nets.faceRecognitionNet.loadFromUri('./models'),
+            faceapi.nets.faceExpressionNet.loadFromUri('./models')
+        ]).catch(err => {
+            console.log(err)
+        })
+        
   },
   methods: { 
         ...mapActions({
             validateImage: 'utils/validateImage',
         }),
+        init() {
+            const context = this
+            //Показать дисклеймер
+            context.showDisclaimer()
+            
+            return new Promise ((resovle, reject) => {
+                //Если 
+                context.startVideo().then(() => {
+                    setTimeout(context.hideDisclaimer, 5000)
+                }).catch(() => {
+                    setTimeout( function () {
+                        context.openModal('Error', 'Enable camera to continue.')
+                    }, 5000)
+                    
+                    return reject()
+                })
+            })
+        },
+        showDisclaimer() {
+            this.isDisclaimer = true
+        },
+        hideDisclaimer() {
+            this.isDisclaimer = false
+        },
         tryAgain() {
             //Действия необходимые при запуске сервиса снова
             for(let index in this.logs) {
@@ -195,8 +247,9 @@ export default {
                 setTimeout(() => { this.onPlay() })
             })
         },
-        startVideo(video) {
+        startVideo() {
             const context = this
+            const video = context.$refs.video
             return new Promise ((resolve, reject) => {
                 navigator.getUserMedia = navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia || navigator.msGetUserMedia || navigator.oGetUserMedia
             
@@ -208,12 +261,11 @@ export default {
                         context.$refs.overlay.height = context.$refs.video.offsetHeight
                         resolve(stream)
                     }, (error) => {
-                        return reject()
+                        return reject(error)
                     })
 
                 } else {
-                    throw({ statusCode: 403, message: 'To fix this problem - enable Camera in browser' })
-                    return reject()
+                    return reject(error)
                 }
             })
         },
