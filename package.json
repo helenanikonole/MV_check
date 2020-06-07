@@ -1,7 +1,7 @@
 {
   "name": "tf",
   "version": "1.0.0",
-  "description": "tf project",
+  "description": "Facial Recognition Test",
   "author": "-",
   "private": true,
   "scripts": {

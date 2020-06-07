@@ -1,6 +1,6 @@
 <template>
   <div class="page">
-    <div class="text-in-corner z-index-10">Project name</div>
+    <div class="text-in-corner z-index-10">Facial Recognition Test</div>
     <nuxt/>  
   </div>
 </template>
@@ -8,16 +8,3 @@
 @import '@/assets/scss/pages/main.scss';
 @import '@/assets/scss/components/modal.scss';
 </style>
-<script>
-import {mapActions, mapMutations} from 'vuex'
-import { mapState } from 'vuex'
-export default {
-  computed:{
-    ...mapState({})
-  },
-  mounted(){    
-  },
-  methods: {    
-  }
-}
-</script>

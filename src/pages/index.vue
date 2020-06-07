@@ -6,7 +6,7 @@
     </modal>
     <div class="image-preview__wrapper">
         <div v-if="image.activeURL" class="image-preview__image">
-            <div class="text-in-corner" @click="removeImage">Select new image</div>
+            <div class="text-in-corner" @click="removeImage">Change reference photo</div>
             <img :src="image.activeURL" ref="referenceImage">
         </div>
         <div 
@@ -19,8 +19,9 @@
             @dragleave="unsetDragStyle"
             @dragend="unsetDragStyle"
             @click="openImageSelector"
-        >    
-            <div class="text-in-corner">Upload image</div>
+        >    <div class="image-preview__advice">Your face should be clearly visible</div>
+            <div class="text-in-corner">Select your reference photo</div>
+            
         </div>
     </div>
     
@@ -31,7 +32,8 @@
                 <div class="webcam__disclaimer-wrapper" v-if="isDisclaimer">
                     <div class="webcam__disclaimer">
                         <h2>Disclaimer</h2>
-                        <h3>VerifyAI accesses your device camera and uses AI algorithms to analyse your video stream. VerifyAI DO NOT transmit, store or share your data as all AI computations are carried out on your local machine ONLY. We respect your privacy.</h3>
+                        <h3>Facial Recognition Test accesses your device camera and uses AI algorithms to analyse your video stream. Facial Recognition Test DO NOT transmit, store or share your data as all AI computations are carried out on your local machine ONLY. We respect your privacy.<br/><br/>
+                        Your reference photo will be compared with the stream from your camera.</h3>
                     </div>
                 </div>
             </transition>
@@ -60,6 +62,14 @@
     </div>
     <div class="manifest__wrapper">
         <div class="text-in-corner">About</div>
+        <p>
+        Facial Recognition Test is an open source project which helps you to verify if the way or solution you use to disrupt Facial Recognition algorithms works. Your reference photo is comparing with the stream from your camera.
+Facial Recognition algorithms uses AI to determine your identity through pictures or videos of your face. To date they are used massively, violating all privacy standards, not only online but also offline - through the ubiquitous surveillance cameras. Artists and activists have developed many projects of special makeup, hairstyles and jewelry to make a face unrecognizable for Facial Recognition algorithms, but we can never be sure if any particular solution works. Facial Recognition Test solves this problem.
+<br/>
+<br/>
+Facial Recognition Test was developed in a frame of Hacathon on Internet Freedom on 6-7 June 2020 by Nikita Morozov, Nikita Prudnikov, Corwin … and Helena Nikonole.
+Corporations and authorities invest a lot in developing Facial Recognition algorithms. Social projects like Facial Recognition Test can not succeed without support of community. You can contribute to the project on github
+        </p>
         <div class="manifest__github"> 
         <a  href="https://github.com/helenanikonole/MV_check" target="_blank">
             <img title="Github repository" src="~/assets/images/logo.png"/>
